@@ -19,8 +19,17 @@ export class App extends Component {
       contacts: [...prevState.contacts, data],
       name: '',
     }));
-    console.log('🚀 ~ file: App.jsx:11 ~ App ~ this.state:', this.state);
   };
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('contacts')) {
+      this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+    }
+  }
 
   deleteContact = id => {
     this.setState(prevState => ({
